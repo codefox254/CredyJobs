@@ -6,6 +6,7 @@ class Job(models.Model):
 	location = models.CharField(max_length=255)
 	company = models.CharField(max_length=255)
 	apply_url = models.URLField()
+	image = models.ImageField(upload_to='job_images/', blank=True, null=True)
 	posted_at = models.DateTimeField(auto_now_add=True)
 	is_active = models.BooleanField(default=True)
 

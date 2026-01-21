@@ -1,18 +1,19 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, Button, Box } from '@mui/material';
+import { AppBar, Toolbar, Box, Button } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
+import Logo from './Logo';
 
 function Navbar() {
   return (
-    <AppBar position="static" color="primary">
+    <AppBar position="sticky" elevation={0} sx={{ bgcolor: '#23272f', color: '#fff', borderBottom: '1px solid #333' }}>
       <Toolbar>
-        <Typography variant="h6" component={RouterLink} to="/" sx={{ flexGrow: 1, textDecoration: 'none', color: 'inherit' }}>
-          CredyJobs
-        </Typography>
+        <Box sx={{ flexGrow: 1 }}>
+          <Logo />
+        </Box>
         <Box>
-          <Button color="inherit" component={RouterLink} to="/">Jobs</Button>
-          <Button color="inherit" component={RouterLink} to="/blog">Blog</Button>
-          <Button color="inherit" component={RouterLink} to="/about">About</Button>
+          <Button color="secondary" component={RouterLink} to="/">Jobs</Button>
+          <Button color="secondary" component={RouterLink} to="/blog">Blog</Button>
+          <Button color="secondary" component={RouterLink} to="/about">About</Button>
         </Box>
       </Toolbar>
     </AppBar>

@@ -1,6 +1,7 @@
 from rest_framework import viewsets
 from .models import Job
 from .serializers import JobSerializer
+from .footer_view import FooterViewSet
 
 class JobViewSet(viewsets.ModelViewSet):
 	queryset = Job.objects.all().order_by('-posted_at')
