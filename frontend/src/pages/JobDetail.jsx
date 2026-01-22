@@ -10,8 +10,8 @@ function JobDetail() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    axios.get(`/api/jobs/${id}/`)
+    useEffect(() => {
+      axios.get(`/api/jobs/${id}/`)
       .then(res => {
         setJob(res.data);
         setLoading(false);

@@ -1,0 +1,11 @@
+title,description,location,company,apply_url,employment_type,category,is_active
+Software Engineer,Develop and maintain software applications,Nairobi,TechNova,https://company.com/apply/1,full_time,Tech,True
+Data Analyst,Analyze data and generate reports,Mombasa,HealthPlus,https://company.com/apply/2,full_time,Health,True
+Marketing Specialist,Plan and execute marketing campaigns,Kisumu,EduSmart,https://company.com/apply/3,part_time,Education,True
+Sales Executive,Drive sales and manage clients,Eldoret,FinEdge,https://company.com/apply/4,contract,Finance,True
+Product Manager,Lead product development,Nakuru,GreenEnergy,https://company.com/apply/5,full_time,Energy,True
+Customer Support,Assist customers and resolve issues,Thika,RetailX,https://company.com/apply/6,full_time,Retail,True
+Business Analyst,Analyze business processes,Machakos,AgriCore,https://company.com/apply/7,full_time,Agriculture,True
+UX Designer,Design user interfaces,Meru,MediLink,https://company.com/apply/8,internship,Medical,True
+DevOps Engineer,Maintain CI/CD pipelines,Kitale,TravelPro,https://company.com/apply/9,remote,Travel,True
+Finance Officer,Manage financial records,Garissa,BuildRight,https://company.com/apply/10,full_time,Construction,True

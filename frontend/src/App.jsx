@@ -14,11 +14,11 @@ import Sidebar from './components/Sidebar';
 function App() {
   return (
     <Router>
-      <Box sx={{ display: 'flex', minHeight: '100vh', bgcolor: '#181818' }}>
+      <Box sx={{ display: 'flex', minHeight: '100vh', width: '100vw', bgcolor: 'background.default' }}>
         <Sidebar />
-        <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+        <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
           <Navbar />
-          <Container maxWidth="md" sx={{ mt: 4, flex: 1, bgcolor: '#23272f', borderRadius: 3, boxShadow: 2, p: 3 }}>
+          <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', width: '100%', minWidth: 0, bgcolor: 'transparent', p: 0 }}>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/job/:id" element={<JobDetail />} />
@@ -27,7 +27,7 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
-          </Container>
+          </Box>
           <Footer />
         </Box>
       </Box>

@@ -1,0 +1,17 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+  <h2>{{ title }}</h2>
+  <div style="margin-bottom: 1em;">
+    <strong>Instructions:</strong>
+    <ul>
+      <li>Upload a CSV file with columns: <code>title,description,location,company,apply_url,employment_type,category,is_active</code></li>
+      <li>Download a <a href="/static/sample_jobs.csv" target="_blank">sample CSV template</a> to get started.</li>
+      <li>employment_type: full_time, part_time, contract, internship, remote, temporary, other</li>
+      <li>is_active: True or False</li>
+    </ul>
+  </div>
+  <form method="post" enctype="multipart/form-data">{% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="default">Upload</button>
+  </form>
+{% endblock %}

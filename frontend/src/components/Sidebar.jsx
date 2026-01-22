@@ -15,24 +15,29 @@ function Sidebar() {
       sx={{
         width: drawerWidth,
         flexShrink: 0,
-        [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box', bgcolor: '#181818', color: '#fff' },
+        [`& .MuiDrawer-paper`]: {
+          width: drawerWidth,
+          boxSizing: 'border-box',
+          bgcolor: 'background.default',
+          color: 'text.primary',
+        },
       }}
     >
       <Box sx={{ mt: 2, mb: 2, textAlign: 'center' }}>
         <HomeIcon sx={{ fontSize: 40, color: 'primary.main' }} />
       </Box>
-      <Divider sx={{ bgcolor: '#333' }} />
+      <Divider sx={{ bgcolor: 'grey.300' }} />
       <List>
         <ListItem button component={RouterLink} to="/">
-          <ListItemIcon sx={{ color: '#fff' }}><WorkIcon /></ListItemIcon>
+          <ListItemIcon sx={{ color: 'primary.main' }}><WorkIcon /></ListItemIcon>
           <ListItemText primary="Jobs" />
         </ListItem>
         <ListItem button component={RouterLink} to="/blog">
-          <ListItemIcon sx={{ color: '#fff' }}><ArticleIcon /></ListItemIcon>
+          <ListItemIcon sx={{ color: 'primary.main' }}><ArticleIcon /></ListItemIcon>
           <ListItemText primary="Blog" />
         </ListItem>
         <ListItem button component={RouterLink} to="/about">
-          <ListItemIcon sx={{ color: '#fff' }}><InfoIcon /></ListItemIcon>
+          <ListItemIcon sx={{ color: 'primary.main' }}><InfoIcon /></ListItemIcon>
           <ListItemText primary="About" />
         </ListItem>
       </List>

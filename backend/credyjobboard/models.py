@@ -7,6 +7,17 @@ class Job(models.Model):
 	company = models.CharField(max_length=255)
 	apply_url = models.URLField()
 	image = models.ImageField(upload_to='job_images/', blank=True, null=True)
+	EMPLOYMENT_TYPES = [
+		("full_time", "Full Time"),
+		("part_time", "Part Time"),
+		("contract", "Contract"),
+		("internship", "Internship"),
+		("temporary", "Temporary"),
+		("remote", "Remote"),
+		("other", "Other"),
+	]
+	employment_type = models.CharField(max_length=32, choices=EMPLOYMENT_TYPES, default="full_time")
+	category = models.CharField(max_length=100, blank=True, null=True)
 	posted_at = models.DateTimeField(auto_now_add=True)
 	is_active = models.BooleanField(default=True)
 

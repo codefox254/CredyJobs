@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import BlogCard from './BlogCard';
-import { CircularProgress, Typography } from '@mui/material';
+import { CircularProgress, Typography, Box } from '@mui/material';
 import axios from 'axios';
 
 function BlogList() {
@@ -9,7 +9,7 @@ function BlogList() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios.get('/api/blogposts/')
+    axios.get('http://127.0.0.1:8000/api/blogposts/')
       .then(res => {
         setBlogs(res.data);
         setLoading(false);
@@ -25,11 +25,24 @@ function BlogList() {
   if (blogs.length === 0) return <Typography>No blog posts found.</Typography>;
 
   return (
-    <div>
+    <Box
+      sx={{
+        display: 'grid',
+        gridTemplateColumns: {
+          xs: '1fr',
+          sm: '1fr 1fr',
+          md: '1fr 1fr 1fr',
+          lg: '1fr 1fr 1fr 1fr'
+        },
+        gap: 3,
+        width: '100%',
+        mt: 2,
+      }}
+    >
       {blogs.map(blog => (
         <BlogCard key={blog.id} blog={blog} />
       ))}
-    </div>
+    </Box>
   );
 }
 

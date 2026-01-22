@@ -10,7 +10,7 @@ function BlogDetailContent() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios.get(`/api/blogposts/${id}/`)
+      axios.get(`/api/blogposts/${id}/`)
       .then(res => {
         setBlog(res.data);
         setLoading(false);
