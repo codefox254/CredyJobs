@@ -65,59 +65,79 @@ function JobList() {
   if (error) return <Typography color="error">{error}</Typography>;
 
   return (
-    <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+    <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>
       <Box sx={{ width: '100%', maxWidth: 1300, mx: 'auto' }}>
-      <Paper elevation={3} sx={{ p: 2, mb: 3, borderRadius: 3, display: 'flex', alignItems: 'center', gap: 2, bgcolor: '#f8fafc' }}>
-        <InputAdornment position="start">
-          <SearchIcon color="primary" sx={{ fontSize: 28 }} />
-        </InputAdornment>
-        <input
-          type="text"
-          placeholder="Search jobs, companies, locations..."
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-          style={{
-            border: 'none',
-            outline: 'none',
-            background: 'transparent',
-            fontSize: 18,
-            flex: 1,
-            padding: 8,
-          }}
-        />
-        <IconButton color="primary" sx={{ ml: 1 }}>
-          <TuneIcon />
-        </IconButton>
-        <select
-          value={type}
-          onChange={e => setType(e.target.value)}
-          style={{ minWidth: 120, borderRadius: 8, padding: 6, border: '1px solid #ddd', background: '#fff', fontSize: 16 }}
-        >
-          {EMPLOYMENT_TYPES.map(opt => (
-            <option key={opt.value} value={opt.value}>{opt.label}</option>
-          ))}
-        </select>
-        <Box>
-          {categories.map(cat => (
-            <Chip
-              key={cat}
-              label={cat}
-              color={selectedCategory === cat ? 'secondary' : 'default'}
-              onClick={() => setSelectedCategory(selectedCategory === cat ? '' : cat)}
-              sx={{ mr: 1, fontWeight: 600, cursor: 'pointer' }}
-              clickable
-            />
-          ))}
-        </Box>
-      </Paper>
-      {filtered.length === 0 ? (
-        <Typography>No jobs found.</Typography>
-      ) : (
-        <>
-          <Box
-            sx={{
-              display: 'grid',
-              gridTemplateColumns: {
+        {/* Modern Search Bar */}
+        <Paper elevation={4} sx={{
+          p: 2, mb: 2, borderRadius: 4, display: 'flex', alignItems: 'center', gap: 2,
+          bgcolor: 'linear-gradient(90deg,#00c6ff 0%,#0072ff 100%)',
+          boxShadow: '0 4px 24px 0 rgba(0,114,255,0.12)',
+          border: '2px solid #00c6ff',
+          position: 'relative',
+        }}>
+          <InputAdornment position="start">
+            <SearchIcon sx={{ fontSize: 32, color: '#fff', filter: 'drop-shadow(0 2px 8px #00c6ff)' }} />
+          </InputAdornment>
+          <input
+            type="text"
+            placeholder="🔍 Find your dream job in seconds..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            style={{
+              border: 'none',
+              outline: 'none',
+              background: 'transparent',
+              fontSize: 22,
+              flex: 1,
+              padding: 10,
+              color: '#fff',
+              fontWeight: 700,
+              letterSpacing: 1,
+              textShadow: '0 2px 8px #00c6ff',
+            }}
+          />
+        </Paper>
+        {/* Futuristic Filter Tab */}
+        <Paper elevation={2} sx={{
+          p: 2, mb: 3, borderRadius: 4, display: 'flex', alignItems: 'center', gap: 2,
+          bgcolor: 'linear-gradient(90deg,#ffaf7b 0%,#d76d77 100%)',
+          boxShadow: '0 2px 12px 0 rgba(215,109,119,0.12)',
+          border: '2px solid #ffaf7b',
+          position: 'relative',
+        }}>
+          <IconButton color="secondary" sx={{ ml: 1, bgcolor: '#fff', boxShadow: '0 2px 8px #ffaf7b', '&:hover': { bgcolor: '#ffe0c1' } }}>
+            <TuneIcon sx={{ color: '#d76d77' }} />
+          </IconButton>
+          <select
+            value={type}
+            onChange={e => setType(e.target.value)}
+            style={{ minWidth: 140, borderRadius: 10, padding: 10, border: '2px solid #fff', background: '#fff', fontSize: 18, fontWeight: 600, color: '#d76d77', marginRight: 16 }}
+          >
+            {EMPLOYMENT_TYPES.map(opt => (
+              <option key={opt.value} value={opt.value}>{opt.label}</option>
+            ))}
+          </select>
+          <Box>
+            {categories.map(cat => (
+              <Chip
+                key={cat}
+                label={cat}
+                color={selectedCategory === cat ? 'secondary' : 'default'}
+                onClick={() => setSelectedCategory(selectedCategory === cat ? '' : cat)}
+                sx={{ mr: 1, fontWeight: 700, cursor: 'pointer', fontSize: 16, bgcolor: selectedCategory === cat ? '#d76d77' : '#fff', color: selectedCategory === cat ? '#fff' : '#d76d77', border: '1.5px solid #d76d77', boxShadow: selectedCategory === cat ? '0 2px 8px #d76d77' : 'none' }}
+                clickable
+              />
+            ))}
+          </Box>
+        </Paper>
+        {filtered.length === 0 ? (
+          <Typography>No jobs found.</Typography>
+        ) : (
+          <>
+            <Box
+              sx={{
+                display: 'grid',
+                gridTemplateColumns: {
                 xs: '1fr',
                 sm: '1fr 1fr',
                 md: '1fr 1fr 1fr',

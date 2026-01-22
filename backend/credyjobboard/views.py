@@ -1,3 +1,10 @@
+from .models import Advert
+from .serializers import AdvertSerializer
+from rest_framework import generics
+
+class AdvertListView(generics.ListAPIView):
+	queryset = Advert.objects.filter(is_active=True).order_by('-created_at')
+	serializer_class = AdvertSerializer
 from rest_framework import viewsets
 from .models import Job
 from .serializers import JobSerializer

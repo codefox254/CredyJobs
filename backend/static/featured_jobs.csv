@@ -1,0 +1,6 @@
+title,description,location,company,apply_url,employment_type,category,is_active,image
+AI Solutions Architect,Lead AI projects and design scalable solutions,Nairobi,AI Innovators,https://company.com/apply/ai-arch,full_time,Tech,True,job_images/add1.jpg
+Senior Data Scientist,Analyze data and build predictive models,Mombasa,DataGenius,https://company.com/apply/data-sci,full_time,Tech,True,job_images/add2.jpg
+Creative Marketing Lead,Drive creative campaigns and brand growth,Kisumu,BrandMakers,https://company.com/apply/marketing-lead,full_time,Marketing,True,job_images/add3.jpg
+Remote DevOps Engineer,Maintain cloud infrastructure remotely,Remote,CloudOps,https://company.com/apply/devops,remote,Tech,True,job_images/add4.jpg
+Healthcare Product Manager,Oversee product lifecycle in health tech,Nakuru,HealthBridge,https://company.com/apply/health-pm,full_time,Health,True,job_images/add5.jpg

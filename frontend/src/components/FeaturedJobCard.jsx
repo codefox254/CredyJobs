@@ -28,16 +28,41 @@ function copyShareLink(jobId) {
 function FeaturedJobCard({ job }) {
   return (
     <Fade in timeout={800}>
-      <Card sx={{ mb: 4, borderRadius: 4, boxShadow: 6, display: 'flex', flexDirection: { xs: 'column', md: 'row' }, bgcolor: 'background.paper', color: 'text.primary', position: 'relative', overflow: 'hidden' }}>
+      <Card
+        sx={{
+          mb: 4,
+          borderRadius: 6,
+          boxShadow: '0 8px 32px 0 rgba(60,72,88,0.18)',
+          display: 'flex',
+          flexDirection: { xs: 'column', md: 'row' },
+          bgcolor: 'rgba(255,255,255,0.7)',
+          color: 'text.primary',
+          position: 'relative',
+          overflow: 'hidden',
+          border: '2px solid',
+          borderImage: 'linear-gradient(90deg, #00c6ff 0%, #0072ff 100%) 1',
+          backdropFilter: 'blur(12px)',
+          transition: 'box-shadow 0.3s',
+          '&:hover': {
+            boxShadow: '0 12px 40px 0 rgba(0,114,255,0.25)',
+            borderImage: 'linear-gradient(90deg, #ffaf7b 0%, #d76d77 100%) 1',
+          },
+        }}
+      >
         {job.image && (
-          <CardMedia
-            component="img"
-            image={job.image.startsWith('http') ? job.image : `/media/${job.image}`}
-            alt={job.company}
-            sx={{ width: { xs: '100%', md: 220 }, height: 220, objectFit: 'contain', bgcolor: '#23272f', p: 2, borderRadius: 3 }}
-          />
+          <Box sx={{ position: 'relative', width: { xs: '100%', md: 260 }, height: 260, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', bgcolor: '#23272f' }}>
+            <CardMedia
+              component="img"
+              image={job.image.startsWith('http') ? job.image : `/media/${job.image}`}
+              alt={job.company}
+              sx={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.92, filter: 'blur(0px) saturate(1.2)' }}
+            />
+            <Box sx={{ position: 'absolute', bottom: 10, left: 10, bgcolor: 'rgba(0,0,0,0.55)', px: 2, py: 0.5, borderRadius: 2 }}>
+              <Typography variant="subtitle2" color="#fff" fontWeight={600}>{job.company}</Typography>
+            </Box>
+          </Box>
         )}
-        <CardContent sx={{ flex: 1 }}>
+        <CardContent sx={{ flex: 1, position: 'relative', zIndex: 2 }}>
           <Box display="flex" alignItems="center" gap={1} mb={1}>
             <CompanyTag company={job.company} />
             <LocationTag location={job.location} />
@@ -51,13 +76,21 @@ function FeaturedJobCard({ job }) {
               </IconButton>
             </Tooltip>
           </Box>
-          <Typography variant="h4" fontWeight={700} gutterBottom>
+          <Typography variant="h3" fontWeight={800} gutterBottom sx={{ background: 'linear-gradient(90deg,#0072ff,#00c6ff)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', mb: 1 }}>
             {job.title}
           </Typography>
-          <Typography variant="body1" sx={{ mb: 2, whiteSpace: 'pre-line' }}>
+          <Typography variant="body1" sx={{ mb: 2, whiteSpace: 'pre-line', fontSize: 18, color: '#23272f', fontWeight: 500 }}>
             {job.description}
           </Typography>
-          <Button variant="contained" color="secondary" href={job.apply_url} target="_blank" rel="noopener noreferrer" size="large">
+          <Button
+            variant="contained"
+            color="secondary"
+            href={job.apply_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            size="large"
+            sx={{ fontWeight: 700, fontSize: 18, px: 4, py: 1.5, boxShadow: '0 2px 8px rgba(0,114,255,0.12)' }}
+          >
             👉 Apply Now
           </Button>
         </CardContent>

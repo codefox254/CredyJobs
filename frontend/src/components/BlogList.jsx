@@ -9,7 +9,7 @@ function BlogList() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:8000/api/blogposts/')
+    axios.get('/api/blogposts/')
       .then(res => {
         setBlogs(res.data);
         setLoading(false);

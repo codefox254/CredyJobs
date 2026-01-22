@@ -18,8 +18,8 @@ function Sidebar() {
         [`& .MuiDrawer-paper`]: {
           width: drawerWidth,
           boxSizing: 'border-box',
-          bgcolor: 'background.default',
-          color: 'text.primary',
+          bgcolor: 'linear-gradient(180deg,#d0f5df 0%,#eaffea 100%)',
+          color: '#222',
         },
       }}
     >

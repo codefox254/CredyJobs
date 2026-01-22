@@ -1,4 +1,10 @@
 from django.contrib import admin
+from .models import Advert
+@admin.register(Advert)
+class AdvertAdmin(admin.ModelAdmin):
+	list_display = ("title", "is_active", "created_at")
+	search_fields = ("title", "description")
+	list_filter = ("is_active",)
 from .models import Job
 from .footer import Footer
 

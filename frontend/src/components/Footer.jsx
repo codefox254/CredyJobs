@@ -21,18 +21,18 @@ function Footer() {
   }, []);
 
   return (
-    <Box component="footer" sx={{ mt: 8, py: 4, textAlign: 'center', color: '#fff', bgcolor: '#181818', borderTop: '1px solid #333' }}>
+    <Box component="footer" sx={{ mt: 8, py: 4, textAlign: 'center', color: '#222', bgcolor: 'linear-gradient(90deg,#d0f5df 0%,#eaffea 100%)', borderTop: '1px solid #b2dfdb' }}>
       <Typography variant="body2" sx={{ mb: 1 }}>{footer.text}</Typography>
       <Typography variant="body2" sx={{ mb: 1 }}>{footer.contact}</Typography>
       <Box>
         {footer.links && footer.links.map((link, i) => (
-          <Link key={i} href={link.url} color="secondary" underline="hover" sx={{ mx: 1 }}>
+          <Link key={i} href={link.url} color="primary" underline="hover" sx={{ mx: 1 }}>
             {link.label}
           </Link>
         ))}
       </Box>
       {isAdmin && (
-        <IconButton color="secondary" size="small" sx={{ ml: 2 }}>
+        <IconButton color="primary" size="small" sx={{ ml: 2 }}>
           <EditIcon fontSize="small" />
         </IconButton>
       )}
