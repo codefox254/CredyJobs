@@ -1,0 +1,71 @@
+/* Custom Admin CSS - Modern, Attractive Look */
+body, html {
+    background: linear-gradient(135deg, #f4f6fa 0%, #e3e9f7 100%);
+    font-family: 'Inter', 'Roboto', Arial, sans-serif;
+}
+
+#header, .module caption, .breadcrumbs {
+    background: #1db954 !important;
+    color: #fff !important;
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 2px 8px rgba(30,185,84,0.08);
+}
+
+#user-tools, .userlinks {
+    background: #fff;
+    color: #1db954;
+    border-radius: 8px;
+    padding: 4px 12px;
+    font-weight: 600;
+    box-shadow: 0 1px 4px rgba(30,185,84,0.06);
+}
+
+#content-main, .module, .inline-group {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 16px rgba(30,185,84,0.07);
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+.button, input[type="submit"], input[type="button"], .submit-row input {
+    background: #1db954;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 20px;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+.button:hover, input[type="submit"]:hover, input[type="button"]:hover, .submit-row input:hover {
+    background: #1976d2;
+}
+
+tr:nth-child(even) td {
+    background: #f4f6fa;
+}
+
+tr:nth-child(odd) td {
+    background: #fff;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #1976d2;
+    font-weight: 700;
+}
+
+.module caption, .breadcrumbs {
+    font-size: 1.1em;
+    font-weight: 600;
+}
+
+#footer {
+    background: #1db954;
+    color: #fff;
+    border-radius: 12px 12px 0 0;
+    padding: 8px 0;
+    margin-top: 32px;
+    font-size: 1em;
+}
+
+/* Add more customizations as needed */

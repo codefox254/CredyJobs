@@ -11,7 +11,7 @@ function Logo() {
           style={{ width: 36, height: 36, borderRadius: '50%', objectFit: 'cover', boxShadow: '0 2px 8px 0 rgba(0,0,0,0.10)' }}
         />
       </Box>
-      <Typography variant="h6" color="primary.main" fontWeight={700}>
+      <Typography variant="h6" color="secondary.main" fontWeight={700} fontFamily="Inter, Roboto, Arial, sans-serif">
         CredyJobs
       </Typography>
     </Box>

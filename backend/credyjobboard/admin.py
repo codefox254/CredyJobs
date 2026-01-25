@@ -1,4 +1,6 @@
 from django.contrib import admin
+admin.site.site_header = "Credyjobs adminsite"
+admin.site.site_title = "Credyjobs adminsite"
 from .models import Advert
 @admin.register(Advert)
 class AdvertAdmin(admin.ModelAdmin):

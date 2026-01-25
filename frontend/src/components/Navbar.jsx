@@ -5,15 +5,15 @@ import Logo from './Logo';
 
 function Navbar() {
   return (
-    <AppBar position="sticky" elevation={0} sx={{ bgcolor: 'linear-gradient(90deg,#d0f5df 0%,#eaffea 100%)', color: '#222', borderBottom: '1px solid #b2dfdb' }}>
+    <AppBar position="sticky" elevation={0} sx={{ bgcolor: 'linear-gradient(90deg,#1db954 0%,#43a047 100%)', color: '#fff', borderBottom: '1px solid #43a047' }}>
       <Toolbar>
         <Box sx={{ flexGrow: 1 }}>
           <Logo />
         </Box>
         <Box>
-          <Button color="primary" component={RouterLink} to="/">Jobs</Button>
-          <Button color="primary" component={RouterLink} to="/blog">Blog</Button>
-          <Button color="primary" component={RouterLink} to="/about">About</Button>
+          <Button color="secondary" component={RouterLink} to="/">Jobs</Button>
+          <Button color="secondary" component={RouterLink} to="/blog">Blog</Button>
+          <Button color="secondary" component={RouterLink} to="/about">About</Button>
         </Box>
       </Toolbar>
     </AppBar>

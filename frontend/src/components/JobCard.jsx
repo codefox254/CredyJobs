@@ -39,27 +39,27 @@ function JobCard({ job }) {
         )}
         <CardContent sx={{ flex: 1 }}>
           <Stack direction="row" spacing={1} alignItems="center" mb={1}>
-            <Chip icon={<WorkIcon sx={{ color: 'secondary.main', animation: `${bounce} 1.2s infinite` }} />} label={job.employment_type?.replace('_', ' ').toUpperCase()} size="small" color="secondary" />
-            {job.category && <Chip label={job.category} size="small" color="primary" />}
-            <Chip icon={<CalendarMonthIcon sx={{ color: 'primary.main', animation: `${bounce} 1.5s infinite` }} />} label={new Date(job.posted_at).toLocaleDateString()} size="small" />
+            <Chip icon={<WorkIcon sx={{ color: '#e53935', animation: `${bounce} 1.2s infinite` }} />} label={job.employment_type?.replace('_', ' ').toUpperCase()} size="small" color="secondary" />
+            {job.category && <Chip label={job.category} size="small" sx={{ bgcolor: '#fff3e0', color: '#d84315', fontWeight: 600 }} />}
+            <Chip icon={<CalendarMonthIcon sx={{ color: '#d84315', animation: `${bounce} 1.5s infinite` }} />} label={new Date(job.posted_at).toLocaleDateString()} size="small" sx={{ bgcolor: '#fffde7', color: '#fbc02d', fontWeight: 600 }} />
           </Stack>
-          <Typography variant="h6" component={RouterLink} to={`/job/${job.id}`} sx={{ textDecoration: 'none', color: 'primary.main', fontWeight: 700, cursor: 'pointer', mb: 0.5 }}>
+          <Typography variant="h6" component={RouterLink} to={`/job/${job.id}`} sx={{ textDecoration: 'none', color: '#111', fontWeight: 700, cursor: 'pointer', mb: 0.5, fontFamily: 'Inter, Roboto, Arial, sans-serif' }}>
             {job.title}
           </Typography>
-          <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1, display: 'flex', alignItems: 'center' }}>
-            <PlaceIcon fontSize="small" sx={{ verticalAlign: 'middle', mr: 0.5, color: 'success.main', animation: `${bounce} 1.7s infinite` }} />
+          <Typography variant="subtitle2" sx={{ mb: 1, display: 'flex', alignItems: 'center', fontFamily: 'Inter, Roboto, Arial, sans-serif', color: '#111', fontWeight: 600 }}>
+            <PlaceIcon fontSize="small" sx={{ verticalAlign: 'middle', mr: 0.5, color: '#43a047', animation: `${bounce} 1.7s infinite` }} />
             {job.company} • {job.location}
           </Typography>
-          <Typography variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
+          <Typography variant="body2" sx={{ mb: 2, color: '#111', fontFamily: 'Inter, Roboto, Arial, sans-serif', fontWeight: 600 }}>
             {job.description?.slice(0, 120)}{job.description?.length > 120 ? '...' : ''}
           </Typography>
           <Stack direction="row" spacing={1} alignItems="center">
-            <Button variant="contained" color="secondary" href={job.apply_url} target="_blank" rel="noopener noreferrer" size="small">
+            <Button variant="contained" color="secondary" href={job.apply_url} target="_blank" rel="noopener noreferrer" size="small" sx={{ fontWeight: 600, fontFamily: 'Inter, Roboto, Arial, sans-serif' }}>
               Apply
             </Button>
             <Tooltip title="Share this job!">
               <IconButton color="primary" onClick={() => copyShareLink(job.id)}>
-                <ShareIcon sx={{ animation: `${bounce} 2s infinite` }} />
+                <ShareIcon sx={{ animation: `${bounce} 2s infinite`, color: '#1976d2' }} />
               </IconButton>
             </Tooltip>
           </Stack>

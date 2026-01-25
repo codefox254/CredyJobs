@@ -67,19 +67,19 @@ function FeaturedJobCard({ job }) {
             <CompanyTag company={job.company} />
             <LocationTag location={job.location} />
             <DateTag date={job.posted_at} />
-            <Chip label={job.employment_type?.replace('_', ' ').toUpperCase()} color="secondary" size="small" icon={<WorkIcon sx={{ animation: `${bounce} 1.2s infinite` }} />} />
-            {job.category && <Chip label={job.category} color="primary" size="small" />}
-            <Chip label="Featured" color="success" size="small" />
+            <Chip label={job.employment_type?.replace('_', ' ').toUpperCase()} color="secondary" size="small" icon={<WorkIcon sx={{ color: '#e53935', animation: `${bounce} 1.2s infinite` }} />} />
+            {job.category && <Chip label={job.category} sx={{ bgcolor: '#fff3e0', color: '#d84315', fontWeight: 600 }} size="small" />}
+            <Chip label="Featured" sx={{ bgcolor: '#fffde7', color: '#e53935', fontWeight: 700 }} size="small" />
             <Tooltip title="Share this job!">
-              <IconButton color="primary" onClick={() => copyShareLink(job.id)}>
-                <ShareIcon sx={{ animation: `${bounce} 2s infinite` }} />
+              <IconButton color="secondary" onClick={() => copyShareLink(job.id)}>
+                <ShareIcon sx={{ animation: `${bounce} 2s infinite`, color: '#e53935' }} />
               </IconButton>
             </Tooltip>
           </Box>
-          <Typography variant="h3" fontWeight={800} gutterBottom sx={{ background: 'linear-gradient(90deg,#0072ff,#00c6ff)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', mb: 1 }}>
+          <Typography variant="h5" fontWeight={700} gutterBottom sx={{ color: 'secondary.main', mb: 1, fontFamily: 'Inter, Roboto, Arial, sans-serif', fontSize: { xs: 20, sm: 24, md: 26 } }}>
             {job.title}
           </Typography>
-          <Typography variant="body1" sx={{ mb: 2, whiteSpace: 'pre-line', fontSize: 18, color: '#23272f', fontWeight: 500 }}>
+          <Typography variant="body1" sx={{ mb: 2, whiteSpace: 'pre-line', fontSize: 16, color: 'secondary.main', fontWeight: 400, fontFamily: 'Inter, Roboto, Arial, sans-serif' }}>
             {job.description}
           </Typography>
           <Button
@@ -89,7 +89,7 @@ function FeaturedJobCard({ job }) {
             target="_blank"
             rel="noopener noreferrer"
             size="large"
-            sx={{ fontWeight: 700, fontSize: 18, px: 4, py: 1.5, boxShadow: '0 2px 8px rgba(0,114,255,0.12)' }}
+            sx={{ fontWeight: 600, fontSize: 16, px: 4, py: 1.5, fontFamily: 'Inter, Roboto, Arial, sans-serif' }}
           >
             👉 Apply Now
           </Button>

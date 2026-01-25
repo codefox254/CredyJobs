@@ -1,10 +1,11 @@
 from .models import Advert
 from .serializers import AdvertSerializer
-from rest_framework import generics
+from rest_framework import generics, viewsets, permissions
 
-class AdvertListView(generics.ListAPIView):
-	queryset = Advert.objects.filter(is_active=True).order_by('-created_at')
+class AdvertViewSet(viewsets.ModelViewSet):
+	queryset = Advert.objects.all().order_by('-created_at')
 	serializer_class = AdvertSerializer
+	permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 from rest_framework import viewsets
 from .models import Job
 from .serializers import JobSerializer

@@ -1,0 +1,27 @@
+{% extends "admin/change_list.html" %}
+
+{% block content %}
+  <div style="padding: 2rem; background: linear-gradient(90deg,#eaffea 0%,#1db954 100%); border-radius: 12px; box-shadow: 0 8px 32px 0 rgba(30,255,180,0.12); margin-bottom: 2rem;">
+    <h2 style="color: #1db954; font-weight: 800; font-size: 2rem; letter-spacing: 1px; margin-bottom: 1rem;">CredyJobs - Advanced Job Management</h2>
+    <p style="color: #222; font-size: 1.1rem; margin-bottom: 1.5rem;">Upload jobs via CSV, filter, and manage your job board with a modern look.</p>
+    <a href="upload-csv/" class="button" style="background: #1db954; color: #fff; padding: 0.5rem 1.5rem; border-radius: 6px; font-weight: 700; text-decoration: none; box-shadow: 0 2px 8px 0 rgba(30,255,180,0.10);">Upload Jobs from CSV</a>
+  </div>
+  {{ block.super }}
+{% endblock %}
+
+{% block sidebar %}
+  <div style="margin-bottom: 2rem;">
+    <h3 style="color: #1db954; font-weight: 700;">Quick Actions</h3>
+    <ul style="list-style: none; padding: 0;">
+      <li><a href="/admin/credyjobboard/job/add/" style="color: #1976d2; font-weight: 600;">Add New Job</a></li>
+      <li><a href="/admin/credyjobboard/advert/" style="color: #1976d2; font-weight: 600;">Manage Adverts</a></li>
+      <li><a href="/admin/credyjobboard/footer/" style="color: #1976d2; font-weight: 600;">Edit Footer</a></li>
+    </ul>
+  </div>
+  {{ block.super }}
+{% endblock %}
+
+{% block extrahead %}
+  <link rel="stylesheet" type="text/css" href="/static/admin/custom_admin.css?v=2" />
+  {{ block.super }}
+{% endblock %}

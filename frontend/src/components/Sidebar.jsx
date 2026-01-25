@@ -3,7 +3,7 @@ import { Drawer, List, ListItem, ListItemIcon, ListItemText, Box, Divider } from
 import WorkIcon from '@mui/icons-material/Work';
 import ArticleIcon from '@mui/icons-material/Article';
 import InfoIcon from '@mui/icons-material/Info';
-import HomeIcon from '@mui/icons-material/Home';
+import Logo from './Logo';
 import { Link as RouterLink } from 'react-router-dom';
 
 const drawerWidth = 220;
@@ -18,27 +18,27 @@ function Sidebar() {
         [`& .MuiDrawer-paper`]: {
           width: drawerWidth,
           boxSizing: 'border-box',
-          bgcolor: 'linear-gradient(180deg,#d0f5df 0%,#eaffea 100%)',
-          color: '#222',
+          bgcolor: '#1db954',
+          color: '#fff',
         },
       }}
     >
       <Box sx={{ mt: 2, mb: 2, textAlign: 'center' }}>
-        <HomeIcon sx={{ fontSize: 40, color: 'primary.main' }} />
+        <Logo />
       </Box>
       <Divider sx={{ bgcolor: 'grey.300' }} />
       <List>
         <ListItem button component={RouterLink} to="/">
-          <ListItemIcon sx={{ color: 'primary.main' }}><WorkIcon /></ListItemIcon>
-          <ListItemText primary="Jobs" />
+          <ListItemIcon sx={{ color: '#fff' }}><WorkIcon /></ListItemIcon>
+          <ListItemText primary="Jobs" sx={{ color: '#fff' }} />
         </ListItem>
         <ListItem button component={RouterLink} to="/blog">
-          <ListItemIcon sx={{ color: 'primary.main' }}><ArticleIcon /></ListItemIcon>
-          <ListItemText primary="Blog" />
+          <ListItemIcon sx={{ color: '#fff' }}><ArticleIcon /></ListItemIcon>
+          <ListItemText primary="Blog" sx={{ color: '#fff' }} />
         </ListItem>
         <ListItem button component={RouterLink} to="/about">
-          <ListItemIcon sx={{ color: 'primary.main' }}><InfoIcon /></ListItemIcon>
-          <ListItemText primary="About" />
+          <ListItemIcon sx={{ color: '#fff' }}><InfoIcon /></ListItemIcon>
+          <ListItemText primary="About" sx={{ color: '#fff' }} />
         </ListItem>
       </List>
     </Drawer>

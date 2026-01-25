@@ -1,6 +1,10 @@
-from django.urls import path
-from .views import AdvertListView
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import AdvertViewSet
+
+router = DefaultRouter()
+router.register(r'api/adverts', AdvertViewSet, basename='advert')
 
 urlpatterns = [
-    path('api/adverts/', AdvertListView.as_view(), name='advert-list'),
+    path('', include(router.urls)),
 ]

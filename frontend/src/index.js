@@ -6,12 +6,19 @@ import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 const theme = createTheme({
   palette: {
     mode: 'light',
-    primary: { main: '#1976d2' },
-    secondary: { main: '#00bcd4' },
+    primary: { main: '#1db954' }, // Green
+    secondary: { main: '#3f51b5' }, // Changed to blue for content
     background: { default: '#f4f6fa' },
+    error: { main: '#e53935' },
+    success: { main: '#43a047' },
+    info: { main: '#1976d2' },
   },
   typography: {
-    fontFamily: 'Roboto, Arial, sans-serif',
+    fontFamily: 'Inter, Roboto, Arial, sans-serif',
+    fontWeightLight: 400,
+    fontWeightRegular: 500,
+    fontWeightMedium: 600,
+    fontWeightBold: 700,
   },
 });
 

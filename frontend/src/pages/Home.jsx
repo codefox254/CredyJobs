@@ -99,15 +99,16 @@ function Home() {
   }, []);
 
   return (
-    <Box sx={{ width: '100%', minHeight: '100vh', px: 0, py: 0, bgcolor: '#f8fafc', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <Box sx={{ width: '100%', minHeight: '100vh', px: 0, py: 0, bgcolor: '#fff', color: '#111', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       {/* Featured jobs bar */}
-      {fetchError && (
-        <Box sx={{ color: 'error.main', my: 2 }}>
-          <Typography color="error">{fetchError}</Typography>
+      {fetchError && featuredJobs.length > 0 && (
+        <Box sx={{ color: 'secondary.main', my: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+          <span role="img" aria-label="featured">🌟</span>
+          <Typography color="secondary">Featured jobs available below!</Typography>
         </Box>
       )}
       {featuredJobs.length > 0 && (
-        <Box sx={{ width: '100%', maxWidth: 1800, mt: 2, mb: 2, px: 2, py: 1, bgcolor: 'linear-gradient(90deg,#00c6ff 0%,#0072ff 100%)', borderRadius: 3, display: 'flex', gap: 2, overflowX: 'auto', boxShadow: 2 }}>
+        <Box sx={{ width: '100%', maxWidth: 1800, mt: 2, mb: 2, px: 2, py: 1, bgcolor: '#1db954', borderRadius: 3, display: 'flex', gap: 2, overflowX: 'auto', boxShadow: 2 }}>
           {featuredJobs.map(job => (
             <Box key={job.id} sx={{ minWidth: 320, maxWidth: 340, flex: '0 0 auto' }}>
               <FeaturedJobCard job={job} />
@@ -121,6 +122,7 @@ function Home() {
         maxWidth: 1800,
         mb: 4,
         bgcolor: '#fff',
+        color: '#111',
         borderRadius: 4,
         boxShadow: '0 8px 32px 0 rgba(60,72,88,0.12)',
         border: '1px solid #e0e0e0',
