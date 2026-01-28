@@ -24,3 +24,12 @@ Django project for CredyJobs MVP. Handles job and blog data, exposes REST APIs, 
 
 ## Admin
 Use Django admin for job/blog CRUD.
+
+## Python 3.14, spaCy, and Pydantic Compatibility
+If you encounter errors related to Pydantic v1 and spaCy when running on Python 3.14 (such as `unable to infer type for attribute "REGEX"`), this is due to incompatibility between spaCy's use of Pydantic v1 and Python 3.14.
+
+### Solution
+- All spaCy imports and model loading have been moved inside functions (lazy import) instead of at the module level.
+- This prevents initialization errors and allows the project to run on Python 3.14.
+
+See `nlp_utils.py` and `scrapy_crawlers/nlp_extractor.py` for examples of lazy imports.

@@ -23,6 +23,12 @@ function About() {
         <Typography variant="body1" sx={{ mb: 2 }}>
           CredyJobs is a modern, user-friendly platform connecting job seekers with top opportunities. Our mission is to make job discovery and application seamless, transparent, and effective.
         </Typography>
+        <Paper elevation={0} sx={{ bgcolor: '#e3f9e5', p: 2, borderRadius: 2, mb: 2, border: '1px solid #1db95455' }}>
+          <Typography variant="body1" color="success.main" fontWeight={700}>
+            <span role="img" aria-label="info">ℹ️</span> We only offer <b>free job advertisements</b> and <b>never charge applicants any registration fee</b>.
+            If anyone asks you for payment to apply for a job on CredyJobs, please report it immediately.
+          </Typography>
+        </Paper>
         <List>
           <ListItem>
             <ListItemIcon><CheckCircleIcon color="success" /></ListItemIcon>

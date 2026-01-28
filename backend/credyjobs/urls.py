@@ -21,15 +21,17 @@ from django.conf import settings
 from django.conf.urls.static import static
 from rest_framework.routers import DefaultRouter
 from credyjobboard.views import JobViewSet, FooterViewSet
-from blogposts.views import BlogPostViewSet
+from blogposts.views import BlogPostViewSet, CommentViewSet
 
 router = DefaultRouter()
 router.register(r'jobs', JobViewSet, basename='job')
 router.register(r'blogposts', BlogPostViewSet, basename='blogpost')
+router.register(r'comments', CommentViewSet, basename='comment')
 router.register(r'footer', FooterViewSet, basename='footer')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('admin/', include('credyjobboard.admin_urls')),  # Mount custom admin dashboard URLs under /admin/
     path('api/', include(router.urls)),
     path('', include('credyjobboard.urls')),
 ]

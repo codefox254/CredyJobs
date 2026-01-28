@@ -1,0 +1,20 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<h1>Preview: {{ original.title }}</h1>
+<div style="display: flex; gap: 2rem; flex-wrap: wrap;">
+  <div style="background: #f5f5f5; padding: 1rem; border-radius: 8px; min-width: 300px;">
+    <h3>{{ original.title }}</h3>
+    <p><strong>Company:</strong> {{ original.company }}</p>
+    <p><strong>Location:</strong> {{ original.location }}</p>
+    <p><strong>Date Found:</strong> {{ original.date_found }}</p>
+    <p><strong>Source:</strong> {{ original.source }}</p>
+    <p><strong>Apply URL:</strong> <a href="{{ original.apply_url }}" target="_blank">Apply</a></p>
+    <p><strong>Description:</strong><br>{{ original.description|linebreaks }}</p>
+    {% if original.image %}
+      <img src="{{ original.image.url }}" style="max-width:300px;max-height:300px;" />
+    {% endif %}
+    <p><strong>Status:</strong> {% if original.is_approved %}Approved{% elif original.is_rejected %}Rejected{% else %}Pending{% endif %}</p>
+  </div>
+</div>
+<a href="../../">Back to list</a>
+{% endblock %}

@@ -1,0 +1,2 @@
+# Run the CredyJobs crawler every 5 minutes
+*/5 * * * * /home/darkhacker/Desktop/Projects/CredyJobs/backend/scripts/auto_crawl.sh

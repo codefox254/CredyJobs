@@ -8,7 +8,7 @@ function Home() {
   const [featuredJobs, setFeaturedJobs] = useState([]);
   const [fetchError, setFetchError] = useState(null);
   useEffect(() => {
-    fetch('/api/jobs/?is_active=true&ordering=-posted_at')
+    fetch('/api/jobs/?is_active=true&is_featured=true&ordering=-posted_at')
       .then(async res => {
         try {
           if (!res.ok) {
@@ -19,102 +19,70 @@ function Home() {
         } catch (err) {
           setFetchError('Could not load featured jobs.');
           console.error('Error parsing jobs JSON:', err);
-          // Fallback jobs if fetch fails
-          const fallbackJobs = [
-            {
-              id: 1,
-              title: 'AI Solutions Architect',
-              description: 'Lead AI projects and design scalable solutions',
-              location: 'Nairobi',
-              company: 'AI Innovators',
-              apply_url: 'https://company.com/apply/ai-arch',
-              employment_type: 'full_time',
-              category: 'Featured',
-              is_active: true,
-              image: 'job_images/add1.jpg',
-              posted_at: new Date().toISOString(),
-            },
-            {
-              id: 2,
-              title: 'Senior Data Scientist',
-              description: 'Analyze data and build predictive models',
-              location: 'Mombasa',
-              company: 'DataGenius',
-              apply_url: 'https://company.com/apply/data-sci',
-              employment_type: 'full_time',
-              category: 'Featured',
-              is_active: true,
-              image: 'job_images/add2.jpg',
-              posted_at: new Date().toISOString(),
-            },
-            {
-              id: 3,
-              title: 'Creative Marketing Lead',
-              description: 'Drive creative campaigns and brand growth',
-              location: 'Kisumu',
-              company: 'BrandMakers',
-              apply_url: 'https://company.com/apply/marketing-lead',
-              employment_type: 'full_time',
-              category: 'Featured',
-              is_active: true,
-              image: 'job_images/add3.jpg',
-              posted_at: new Date().toISOString(),
-            },
-            {
-              id: 4,
-              title: 'Remote DevOps Engineer',
-              description: 'Maintain cloud infrastructure remotely',
-              location: 'Remote',
-              company: 'CloudOps',
-              apply_url: 'https://company.com/apply/devops',
-              employment_type: 'remote',
-              category: 'Featured',
-              is_active: true,
-              image: 'job_images/add4.jpg',
-              posted_at: new Date().toISOString(),
-            },
-            {
-              id: 5,
-              title: 'Healthcare Product Manager',
-              description: 'Oversee product lifecycle in health tech',
-              location: 'Nakuru',
-              company: 'HealthBridge',
-              apply_url: 'https://company.com/apply/health-pm',
-              employment_type: 'full_time',
-              category: 'Featured',
-              is_active: true,
-              image: 'job_images/add5.jpg',
-              posted_at: new Date().toISOString(),
-            },
-          ];
-          setFeaturedJobs(fallbackJobs);
-          return fallbackJobs;
+          setFeaturedJobs([]);
+          return [];
         }
       })
       .then(data => {
         if (Array.isArray(data)) {
-          setFeaturedJobs(data.filter(j => j.category && j.category.toLowerCase().includes('featured')).slice(0, 5));
+          setFeaturedJobs(data.slice(0, 5));
         }
       });
   }, []);
 
   return (
     <Box sx={{ width: '100%', minHeight: '100vh', px: 0, py: 0, bgcolor: '#fff', color: '#111', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      {/* Featured jobs bar */}
-      {fetchError && featuredJobs.length > 0 && (
-        <Box sx={{ color: 'secondary.main', my: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
-          <span role="img" aria-label="featured">🌟</span>
-          <Typography color="secondary">Featured jobs available below!</Typography>
-        </Box>
-      )}
+      {/* Featured jobs bar (label removed, bar now occupies space directly) */}
       {featuredJobs.length > 0 && (
-        <Box sx={{ width: '100%', maxWidth: 1800, mt: 2, mb: 2, px: 2, py: 1, bgcolor: '#1db954', borderRadius: 3, display: 'flex', gap: 2, overflowX: 'auto', boxShadow: 2 }}>
-          {featuredJobs.map(job => (
-            <Box key={job.id} sx={{ minWidth: 320, maxWidth: 340, flex: '0 0 auto' }}>
-              <FeaturedJobCard job={job} />
+        <>
+          {/* Unique, simple label above bar */}
+          <Box sx={{ width: '100%', maxWidth: 1800, mx: 'auto', mt: 4, mb: 1, display: 'flex', justifyContent: 'flex-start', alignItems: 'center', px: 2 }}>
+            <Box sx={{
+              bgcolor: '#fff',
+              color: '#1db954',
+              px: 3,
+              py: 1,
+              borderRadius: 4,
+              fontWeight: 900,
+              fontSize: 28,
+              letterSpacing: 2,
+              boxShadow: '0 2px 8px 0 #1db95433',
+              border: '2px solid #1db954',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 2,
+            }}>
+              <span style={{ fontSize: 36, marginRight: 10, verticalAlign: 'middle' }}>🌟</span>
+              Featured Jobs
             </Box>
-          ))}
-        </Box>
+          </Box>
+          <Box
+            sx={{
+              width: '100%',
+              maxWidth: 1800,
+              mt: 1,
+              mb: 3,
+              px: 2,
+              py: 3,
+              borderRadius: 5,
+              display: 'flex',
+              gap: 3,
+              overflowX: 'auto',
+              boxShadow: '0 12px 40px 0 rgba(30,185,84,0.13)',
+              background: 'linear-gradient(90deg, #1db954 0%, #1976d2 100%)',
+              border: '2.5px solid #fff',
+              zIndex: 2,
+              minHeight: 340,
+              alignItems: 'flex-start',
+            }}
+          >
+            {featuredJobs.map(job => (
+              <Box key={job.id} sx={{ minWidth: 340, maxWidth: 370, flex: '0 0 auto', zIndex: 2 }}>
+                <FeaturedJobCard job={job} />
+              </Box>
+            ))}
+          </Box>
+        </>
       )}
       {/* Main jobs area */}
       <Box sx={{

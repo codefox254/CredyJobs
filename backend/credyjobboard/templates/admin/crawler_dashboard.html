@@ -1,0 +1,423 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<h1>Crawler Monitoring Dashboard</h1>
+
+<!-- Crawl Trigger Form & Stats Grid -->
+<div style="display: flex; gap: 2rem; flex-wrap: wrap; margin-bottom: 2rem;">
+  <form id="crawlForm" method="post" action="{{ trigger_url }}">
+    {% csrf_token %}
+    <button id="triggerCrawlBtn" type="submit" class="default">Trigger Crawl Now</button>
+    <span id="crawl-timer" style="margin-left:1rem;font-weight:bold;color:#1eb954;"></span>
+    
+    <!-- Progress Tab -->
+    <div id="crawl-progress-tab" style="margin-top:1em; display:none;">
+      <div style="width:100%; background:#e3fbe3; border-radius:8px; overflow:hidden; height:28px; margin-bottom:0.5em;">
+        <div id="crawl-progress-bar" style="height:100%; width:0%; background:linear-gradient(90deg,#1db954 0%,#1976d2 100%); color:#fff; font-weight:700; text-align:center; line-height:28px; transition:width 0.3s;"></div>
+      </div>
+      <div id="crawl-progress-label" style="font-weight:600; color:#1976d2; margin-bottom:0.5em;">Progress: 0%</div>
+      <div id="crawl-content-list" style="background:#f5f5f5; border-radius:8px; padding:0.5em 1em; max-height:180px; overflow-y:auto; font-size:1em;"></div>
+    </div>
+  </form>
+  
+  <!-- Stats Cards -->
+  <div style="background: #f5f5f5; padding: 1rem; border-radius: 8px; min-width: 200px;">
+    <h3>Total Jobs Crawled</h3>
+    <p style="font-size: 2em;" id="stat-total">{{ total_crawled }}</p>
+  </div>
+  
+  <div style="background: #f5f5f5; padding: 1rem; border-radius: 8px; min-width: 200px;">
+    <h3>Crawled Today</h3>
+    <p style="font-size: 2em;" id="stat-today">{{ crawled_today }}</p>
+  </div>
+  
+  <div style="background: #f5f5f5; padding: 1rem; border-radius: 8px; min-width: 200px;">
+    <h3>Crawled This Week</h3>
+    <p style="font-size: 2em;" id="stat-week">{{ crawled_week }}</p>
+  </div>
+  
+  <div style="background: #f5f5f5; padding: 1rem; border-radius: 8px; min-width: 200px;">
+    <h3>Crawled This Month</h3>
+    <p style="font-size: 2em;" id="stat-month">{{ crawled_month }}</p>
+  </div>
+  
+  <div style="background: #e3fbe3; padding: 1rem; border-radius: 8px; min-width: 200px;">
+    <h3>Approved</h3>
+    <p style="font-size: 2em;" id="stat-approved">{{ approved }}</p>
+  </div>
+  
+  <div style="background: #fbe3e3; padding: 1rem; border-radius: 8px; min-width: 200px;">
+    <h3>Rejected</h3>
+    <p style="font-size: 2em;" id="stat-rejected">{{ rejected }}</p>
+  </div>
+  
+  <div style="background: #fffbe3; padding: 1rem; border-radius: 8px; min-width: 200px;">
+    <h3>Pending</h3>
+    <p style="font-size: 2em;" id="stat-pending">{{ pending }}</p>
+  </div>
+</div>
+
+<!-- Crawler Performance Chart -->
+<h2 style="margin-top:2rem;">Crawler Performance (Last 30 Days)</h2>
+<canvas id="crawlPerformanceChart" width="900" height="300"></canvas>
+
+<!-- Recent Crawl Status -->
+<h2 style="margin-top:2rem;">Recent Crawl Status (Last 24h)</h2>
+<table class="admin-table">
+  <thead>
+    <tr>
+      <th>Source</th>
+      <th>Started</th>
+      <th>Finished</th>
+      <th>Found</th>
+      <th>Updated</th>
+      <th>Summary</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for report in crawl_reports %}
+    <tr>
+      <td>{% if report.source %}{{ report.source.name }}{% else %}N/A{% endif %}</td>
+      <td>{{ report.started_at }}</td>
+      <td>{{ report.finished_at }}</td>
+      <td>{{ report.jobs_found }}</td>
+      <td>{{ report.jobs_updated }}</td>
+      <td>{{ report.summary }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<!-- Sources Table -->
+<h2 style="margin-top:2rem;">Sources</h2>
+<table class="admin-table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>URL</th>
+      <th>Active</th>
+      <th>Jobs Crawled</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for src in sources %}
+    <tr>
+      <td>{{ src.name }}</td>
+      <td><a href="{{ src.url }}" target="_blank">{{ src.url }}</a></td>
+      <td>{{ src.is_active }}</td>
+      <td>{{ src.job_count }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<!-- Last Crawl Per Source -->
+<h2 style="margin-top:2rem;">Last Crawl Per Source</h2>
+<table class="admin-table">
+  <thead>
+    <tr>
+      <th>Source</th>
+      <th>Last Crawl</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in last_crawls %}
+    <tr>
+      <td>{{ row.source__name }}</td>
+      <td>{{ row.last }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<!-- Chart.js Library -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- JSON Data for Chart -->
+{{ perf_labels|json_script:"perf-labels" }}
+{{ perf_data|json_script:"perf-data" }}
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // ============================================================================
+  // CRAWL FORM HANDLER
+  // ============================================================================
+  var form = document.getElementById('crawlForm');
+  var btn = document.getElementById('triggerCrawlBtn');
+  var timerSpan = document.getElementById('crawl-timer');
+  var progressTab = document.getElementById('crawl-progress-tab');
+  var progressBar = document.getElementById('crawl-progress-bar');
+  var progressLabel = document.getElementById('crawl-progress-label');
+  var contentList = document.getElementById('crawl-content-list');
+  
+  var countdownTimer = null;
+  var pollTimer = null;
+  
+  // Get source ID from Django context (modify as needed for your setup)
+  // Option 1: Pass from view context
+  var sourceId = null; // Set to null or assign appropriately if needed
+  // Option 2: If you have multiple sources, you might want to add a select dropdown
+  // var sourceId = document.getElementById('sourceSelect').value;
+  
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Disable button and start countdown timer (10 minutes)
+    var seconds = 600;
+    btn.disabled = true;
+    updateTimerDisplay(seconds);
+    
+    countdownTimer = setInterval(function() {
+      seconds--;
+      if (seconds > 0) {
+        updateTimerDisplay(seconds);
+      } else {
+        clearInterval(countdownTimer);
+        btn.disabled = false;
+        timerSpan.textContent = '';
+      }
+    }, 1000);
+    
+    // Show and reset progress UI
+    progressTab.style.display = 'block';
+    progressBar.style.width = '0%';
+    progressBar.textContent = '0%';
+    progressLabel.textContent = 'Progress: 0%';
+    contentList.innerHTML = '<div>Initializing crawl...</div>';
+    
+    // Trigger crawl via AJAX
+    triggerCrawl();
+    
+    // Start polling for progress
+    startProgressPolling();
+  });
+  
+  // ============================================================================
+  // HELPER FUNCTIONS
+  // ============================================================================
+  
+  function updateTimerDisplay(seconds) {
+    var minutes = Math.floor(seconds / 60);
+    var secs = seconds % 60;
+    timerSpan.textContent = 'Next crawl available in ' + minutes + 'm ' + secs + 's';
+  }
+  
+  function triggerCrawl() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', form.action, true);
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    
+    var csrfToken = form.querySelector('input[name="csrfmiddlewaretoken"]').value;
+    xhr.setRequestHeader('X-CSRFToken', csrfToken);
+    
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        console.log('Crawl triggered successfully');
+      } else {
+        alert('Crawl trigger failed. Status: ' + xhr.status);
+        // Reset UI on failure
+        progressTab.style.display = 'none';
+        clearInterval(countdownTimer);
+        btn.disabled = false;
+        timerSpan.textContent = '';
+      }
+    };
+    
+    xhr.onerror = function() {
+      alert('Network error while triggering crawl.');
+      progressTab.style.display = 'none';
+      clearInterval(countdownTimer);
+      btn.disabled = false;
+      timerSpan.textContent = '';
+    };
+    
+    xhr.send('csrfmiddlewaretoken=' + encodeURIComponent(csrfToken));
+  }
+  
+  function startProgressPolling() {
+    pollProgress();
+  }
+  
+  function pollProgress() {
+    // Build URL with source_id if available
+    var url = '/admin/crawl-progress/';
+    if (sourceId) {
+      url += '?source_id=' + sourceId;
+    }
+    
+    fetch(url)
+      .then(function(resp) {
+        if (!resp.ok) {
+          throw new Error('Progress fetch failed: ' + resp.status);
+        }
+        return resp.json();
+      })
+      .then(function(data) {
+        var percent = data.percent || 0;
+        var jobs = data.jobs || [];
+        
+        // Update progress bar
+        progressBar.style.width = percent + '%';
+        progressBar.textContent = percent + '%';
+        progressLabel.textContent = 'Progress: ' + percent + '%';
+        
+        // Update job list
+        if (jobs.length > 0) {
+          contentList.innerHTML = jobs.map(function(job) {
+            return '<div>• ' + job + '</div>';
+          }).join('');
+        } else {
+          contentList.innerHTML = '<div>Processing...</div>';
+        }
+        
+        // Continue polling if not complete
+        if (percent < 100) {
+          pollTimer = setTimeout(pollProgress, 800);
+        } else {
+          // Crawl complete - update stats
+          progressBar.textContent = 'Complete!';
+          setTimeout(function() {
+            updateStats();
+            progressTab.style.display = 'none';
+          }, 2000);
+        }
+      })
+      .catch(function(err) {
+        console.error('Progress polling error:', err);
+        contentList.innerHTML = '<div style="color:red;">Error fetching progress</div>';
+        // Retry after delay
+        pollTimer = setTimeout(pollProgress, 2000);
+      });
+  }
+  
+  function updateStats() {
+    fetch(window.location.pathname + '?ajax=1')
+      .then(function(resp) {
+        return resp.text();
+      })
+      .then(function(html) {
+        // Parse returned HTML and update stat values
+        var parser = new DOMParser();
+        var doc = parser.parseFromString(html, 'text/html');
+        
+        // Update each stat by ID
+        var stats = ['total', 'today', 'week', 'month', 'approved', 'rejected', 'pending'];
+        stats.forEach(function(stat) {
+          var newValue = doc.getElementById('stat-' + stat);
+          var currentValue = document.getElementById('stat-' + stat);
+          if (newValue && currentValue) {
+            currentValue.textContent = newValue.textContent;
+          }
+        });
+      })
+      .catch(function(err) {
+        console.error('Stats update error:', err);
+      });
+  }
+  
+  // ============================================================================
+  // CHART.JS INITIALIZATION
+  // ============================================================================
+  var ctx = document.getElementById('crawlPerformanceChart').getContext('2d');
+  var labels = JSON.parse(document.getElementById('perf-labels').textContent);
+  var data = JSON.parse(document.getElementById('perf-data').textContent);
+  
+  var chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Jobs Crawled',
+        data: data,
+        borderColor: 'rgba(30,185,84,1)',
+        backgroundColor: 'rgba(30,185,84,0.1)',
+        fill: true,
+        tension: 0.3,
+        pointRadius: 3,
+        pointHoverRadius: 5
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: {
+        legend: { 
+          display: true,
+          position: 'top'
+        },
+        tooltip: {
+          mode: 'index',
+          intersect: false
+        }
+      },
+      scales: {
+        x: { 
+          title: { 
+            display: true, 
+            text: 'Date' 
+          },
+          grid: {
+            display: false
+          }
+        },
+        y: { 
+          title: { 
+            display: true, 
+            text: 'Jobs Crawled' 
+          }, 
+          beginAtZero: true,
+          ticks: {
+            precision: 0
+          }
+        }
+      }
+    }
+  });
+</script>
+
+<style>
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.admin-table th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
+
+.admin-table tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+button.default {
+  background-color: #1db954;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+button.default:hover:not(:disabled) {
+  background-color: #1aa34a;
+}
+
+button.default:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+</style>
+
+{% endblock %}

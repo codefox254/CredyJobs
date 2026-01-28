@@ -9,7 +9,7 @@ function BlogList() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios.get('/api/blogposts/')
+    axios.get('http://127.0.0.1:8000/api/blogposts/')
       .then(res => {
         setBlogs(res.data);
         setLoading(false);
@@ -34,9 +34,11 @@ function BlogList() {
           md: '1fr 1fr 1fr',
           lg: '1fr 1fr 1fr 1fr'
         },
-        gap: 3,
+        gap: 4,
         width: '100%',
         mt: 2,
+        mb: 2,
+        p: 1,
       }}
     >
       {blogs.map(blog => (

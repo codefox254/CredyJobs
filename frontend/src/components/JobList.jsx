@@ -68,32 +68,41 @@ function JobList() {
     <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>
       <Box sx={{ width: '100%', maxWidth: 1300, mx: 'auto' }}>
         {/* Modern Search Bar */}
-        <Paper elevation={4} sx={{
-          p: 2, mb: 2, borderRadius: 4, display: 'flex', alignItems: 'center', gap: 2,
-          bgcolor: 'linear-gradient(90deg,#00c6ff 0%,#0072ff 100%)',
-          boxShadow: '0 4px 24px 0 rgba(0,114,255,0.12)',
-          border: '2px solid #00c6ff',
+        <Paper elevation={6} sx={{
+          p: 1.5,
+          mb: 3,
+          borderRadius: 999,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 2,
+          bgcolor: '#fff',
+          boxShadow: '0 4px 24px 0 rgba(30,185,84,0.10)',
+          border: '2px solid #1db954',
           position: 'relative',
+          minHeight: 56,
+          maxWidth: 600,
+          mx: 'auto',
         }}>
           <InputAdornment position="start">
-            <SearchIcon sx={{ fontSize: 32, color: '#fff', filter: 'drop-shadow(0 2px 8px #00c6ff)' }} />
+            <SearchIcon sx={{ fontSize: 28, color: '#1db954', filter: 'drop-shadow(0 2px 8px #1db95433)' }} />
           </InputAdornment>
           <input
             type="text"
-            placeholder="🔍 Find your dream job in seconds..."
+            placeholder="Find your dream job..."
             value={search}
             onChange={e => setSearch(e.target.value)}
             style={{
               border: 'none',
               outline: 'none',
               background: 'transparent',
-              fontSize: 22,
+              fontSize: 20,
               flex: 1,
-              padding: 10,
-              color: '#fff',
-              fontWeight: 700,
-              letterSpacing: 1,
-              textShadow: '0 2px 8px #00c6ff',
+              padding: '8px 0',
+              color: '#222',
+              fontWeight: 600,
+              letterSpacing: 0.5,
+              borderRadius: 999,
+              transition: 'box-shadow 0.2s',
             }}
           />
         </Paper>
